@@ -20,10 +20,15 @@ function ToysCard({ items }) {
 
       {/* Show More Button */}
 
-      <h2 className="text-3xl md:text-4xl font-serif font-semi-bold mb-6">
-        Latest Toys Collection
-      </h2>
+      <div className="flex items-center gap-4 mb-10">
+        <div className="flex-1 h-[2px] bg-gradient-to-r from-transparent to-black"></div>
 
+        <h2 className="text-3xl lg:text-4xl font-serif text-gray-800">
+          Latest Toys Collection
+        </h2>
+
+        <div className="flex-1 h-[2px] bg-gradient-to-l from-transparent to-black"></div>
+      </div>
       {/* Grid */}
       <div
         className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 

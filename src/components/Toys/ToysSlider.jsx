@@ -17,25 +17,21 @@ function ToysSlider({ items }) {
   return (
     <div
       className="px-4 md:px-10 py-10
-     bg-gradient-to-t from-red-50 to-red-100 rounded-2xl"
+     bg-gradient-to-t from-red-50 to-purple-100 rounded-2xl shadow-lg"
     >
       {/* Heading */}
 
-      {/* Show More Button */}
-      <div className="flex justify-between">
-        <h2 className="text-3xl md:text-4xl font-serif font-semi-bold mb-6">
+      <div className="flex items-center gap-4 mb-10">
+        <div className="flex-1 h-[2px] bg-gradient-to-r from-transparent to-black"></div>
+
+        <h2 className="text-3xl lg:text-4xl font-serif text-gray-800">
           Latest Toys Collection
         </h2>
-        <Link
-          to="/toys"
-          className="bg-gradient-to-r from-blue-500 to-red-500 text-white
-           px-6 py-1 my-3 rounded-lg hover:bg-blue-600 transition"
-        >
-          See More
-        </Link>
+
+        <div className="flex-1 h-[2px] bg-gradient-to-l from-transparent to-black"></div>
       </div>
       {/* Grid */}
-      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
         {toys.map((item) => (
           <div key={item.id} className="w-full">
             {/* 👇 group only on image */}
@@ -54,7 +50,7 @@ function ToysSlider({ items }) {
               <div
                 className="max-h-0 overflow-hidden 
       group-hover:max-h-80 
-      transition-all duration-300 bg-white rounded-b-xl shadow-lg px-4"
+      transition-all duration-300  bg-gradient-to-t from-red-50 to-purple-100 rounded-b-xl shadow-lg px-4"
               >
                 <h3 className="text-lg font-bold mt-2">{item.title}</h3>
 
@@ -68,16 +64,27 @@ function ToysSlider({ items }) {
 
                 {isInCart(item.id) ? (
                   <div className="flex items-center pb-2 text-lg">
-                    <button className="bg-gray-100 px-4 m-2 rounded-l-lg" onClick={() => decreaseQuantity(item.id)}>-</button>
+                    <button
+                      className="bg-gray-100 px-4 m-2 rounded-l-lg"
+                      onClick={() => decreaseQuantity(item.id)}
+                    >
+                      -
+                    </button>
                     <span className="px-3">
                       {cart.find((i) => i.id === item.id)?.quantity || 0}
                     </span>
-                    <button className="bg-gray-100 px-4 m-2 rounded-r-lg" onClick={() => increaseQuantity(item.id)}>+</button>
+                    <button
+                      className="bg-gray-100 px-4 m-2 rounded-r-lg"
+                      onClick={() => increaseQuantity(item.id)}
+                    >
+                      +
+                    </button>
                   </div>
                 ) : (
                   <button
                     onClick={() => addToCart(item)}
-                    className="bg-blue-500 text-white px-3 py-1 my-2 rounded"
+                    className="bg-gradient-to-b from-blue-400 to-red-200 text-black\
+                     px-3 py-1 my-4 rounded"
                   >
                     Add to Cart
                   </button>
@@ -86,6 +93,15 @@ function ToysSlider({ items }) {
             </div>
           </div>
         ))}
+      </div>
+      <div className="text-center m-10">
+        <Link
+          to="/toys"
+          className="bg-gradient-to-b from-purple-400 to-red-200 text-black
+           px-8 py-3 text-lg drop-shadow-lg  rounded-lg transition"
+        >
+          See More
+        </Link>
       </div>
     </div>
   );
