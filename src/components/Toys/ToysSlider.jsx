@@ -83,8 +83,8 @@ function ToysSlider({ items }) {
                 ) : (
                   <button
                     onClick={() => addToCart(item)}
-                    className="bg-gradient-to-b from-blue-400 to-red-200 text-black\
-                     px-3 py-1 my-4 rounded"
+                    className="bg-gradient-to-b from-purple-400 to-red-200 text-black\
+                     px-3 py-1 my-4 rounded "
                   >
                     Add to Cart
                   </button>
@@ -98,7 +98,7 @@ function ToysSlider({ items }) {
         <Link
           to="/toys"
           className="bg-gradient-to-b from-purple-400 to-red-200 text-black
-           px-8 py-3 text-lg drop-shadow-lg  rounded-lg transition"
+           px-8 py-3 text-lg drop-shadow-lg  rounded-lg transition border border-purple-500"
         >
           See More
         </Link>

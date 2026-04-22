@@ -3,20 +3,21 @@ import ProductsData from "../ProductsData";
 import { Link } from "react-router-dom";
 import { useContext } from "react";
 import { CartContext } from "../CartContext";
-function StationarySlider({ items }) {
+function GiftsSlider({ items }) {
   const { addToCart, cart, increaseQuantity, decreaseQuantity } =
     useContext(CartContext);
   const isInCart = (itemId) => {
     return cart.some((item) => item.id === itemId);
   };
-  const stationary = ProductsData.filter(
-    (item) => item.category === "stationary",
-  ).slice(0, 4);
+  const gifts = ProductsData.filter((item) => item.category === "gifts").slice(
+    0,
+    4,
+  );
 
   return (
     <div
       className="px-4 md:px-10 py-10
-     bg-gradient-to-t from-red-50 to-blue-100 my-10 rounded-2xl shadow-lg"
+     bg-gradient-to-t from-red-50 to-green-100 my-10 rounded-2xl shadow-lg"
     >
       {/* Heading */}
 
@@ -25,14 +26,14 @@ function StationarySlider({ items }) {
         <div className="flex-1 h-[2px] bg-gradient-to-r from-transparent to-black"></div>
 
         <h2 className="text-3xl lg:text-4xl font-serif text-gray-800">
-          Latest Stationary Collection
+          Latest Gifts Collection
         </h2>
 
         <div className="flex-1 h-[2px] bg-gradient-to-l from-transparent to-black"></div>
       </div>
       {/* Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-        {stationary.map((item) => (
+        {gifts.map((item) => (
           <div key={item.id} className="w-full">
             {/* 👇 group only on image */}
             <div className="group">
@@ -50,7 +51,7 @@ function StationarySlider({ items }) {
               <div
                 className="max-h-0 overflow-hidden 
       group-hover:max-h-80 
-      transition-all duration-300 bg-gradient-to-t from-red-50 to-blue-100 rounded-b-xl shadow-lg px-4"
+      transition-all duration-300 bg-gradient-to-t from-red-50 to-green-100 rounded-b-xl shadow-lg px-4"
               >
                 <h3 className="text-lg font-bold mt-2">{item.title}</h3>
 
@@ -83,7 +84,7 @@ function StationarySlider({ items }) {
                 ) : (
                   <button
                     onClick={() => addToCart(item)}
-                    className="bg-gradient-to-b from-blue-400 to-red-200 text-black
+                    className="bg-gradient-to-b from-green-300 to-red-200 text-black
                      px-3 py-1 my-4 rounded"
                   >
                     Add to Cart
@@ -96,9 +97,9 @@ function StationarySlider({ items }) {
       </div>
       <div className="text-center m-10">
         <Link
-          to="/stationary"
-          className="bg-gradient-to-b from-blue-400 to-red-200 text-black
-           px-8 py-3 text-lg drop-shadow-lg  rounded-lg transition border border-blue-500"
+          to="/gifts"
+          className="bg-gradient-to-b from-green-300 to-red-200 text-black
+           px-8 py-3 text-lg drop-shadow-lg rounded-lg transition border border-green-500"
         >
           See More
         </Link>
@@ -107,4 +108,4 @@ function StationarySlider({ items }) {
   );
 }
 
-export default StationarySlider;
+export default GiftsSlider;
