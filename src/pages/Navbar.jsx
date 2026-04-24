@@ -24,7 +24,8 @@ const menuItems = [
 
 function Navbar() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
-  const { cart } = useContext(CartContext);
+  const { cart, searchTerm, category, setSearchTerm, setCategory } =
+    useContext(CartContext);
   const totalItems = cart.reduce((total, item) => total + item.quantity, 0);
   return (
     <>
@@ -48,6 +49,7 @@ function Navbar() {
               <input
                 type="search"
                 placeholder="Search products"
+                onChange={(e) => setSearchTerm(e.target.value)}
                 className="w-full rounded-full border border-slate-200 bg-slate-50 py-2.5 pl-11 pr-4 text-sm text-slate-900 outline-none transition focus:border-red-500 focus:ring-2 focus:ring-red-100"
               />
             </label>

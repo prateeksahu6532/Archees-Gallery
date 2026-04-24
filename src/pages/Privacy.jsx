@@ -1,7 +1,11 @@
 import React from "react";
-
+import SearchProductsGrid from "../search/SearchProductsGrid";
 function Privacy() {
-  return <div></div>;
+  return (
+    <div>
+      <SearchProductsGrid category="toys" CardComponent={ToysCard} />
+    </div>
+  );
 }
 
 export default Privacy;

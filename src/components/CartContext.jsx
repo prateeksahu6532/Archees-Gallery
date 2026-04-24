@@ -2,6 +2,8 @@ import { createContext, useState, useEffect } from "react";
 export const CartContext = createContext();
 
 export const CartProvider = ({ children }) => {
+  const [searchTerm, setSearchTerm] = useState("");
+  const [category, setCategory] = useState("");
   const [cart, setCart] = useState(
     JSON.parse(localStorage.getItem("cart")) || [],
   );
@@ -51,6 +53,10 @@ export const CartProvider = ({ children }) => {
         increaseQuantity,
         decreaseQuantity,
         removeFromCart,
+        searchTerm,
+        setSearchTerm,
+        category,
+        setCategory,
       }}
     >
       {children}
