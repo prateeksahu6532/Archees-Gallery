@@ -6,6 +6,8 @@ import { MdOutlineMenuBook, MdToys } from "react-icons/md";
 import { HiOutlineLogin } from "react-icons/hi";
 import { useContext } from "react";
 import { CartContext } from "../components/CartContext";
+import { AuthContext } from "../components/AuthContext"; 
+
 const menuItems = [
   { name: "Toys", to: "/toys", icon: <MdToys className="h-5 w-5" /> },
   {
@@ -19,13 +21,14 @@ const menuItems = [
     to: "/cart",
     icon: <AiOutlineShoppingCart className="h-5 w-5" />,
   },
-  { name: "Login", to: "/login", icon: <HiOutlineLogin className="h-5 w-5" /> },
+ 
 ];
 
 function Navbar() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const { cart, searchTerm, category, setSearchTerm, setCategory } =
     useContext(CartContext);
+    const { user, logout } = useContext(AuthContext);
   const totalItems = cart.reduce((total, item) => total + item.quantity, 0);
   return (
     <>
@@ -79,73 +82,113 @@ function Navbar() {
                 <span>{item.name}</span>
               </NavLink>
             ))}
+          {/* 👤 USER SECTION */}
+            {user ? (
+              <div className="flex items-center gap-3 ml-3">
+
+                <NavLink to="/profile" className="flex items-center gap-2">
+
+                  {/* Avatar */}
+                  {user.image ? (
+                    <img
+                      src={user.image}
+                      className="h-9 w-9 rounded-full object-cover border"
+                    />
+                  ) : (
+                    <div className="h-9 w-9 flex items-center justify-center rounded-full bg-red-500 text-white font-bold">
+                      {user?.name?.charAt(0).toUpperCase()}
+                    </div>
+                  )}
+
+                  <span className="text-sm">{user.name}</span>
+                </NavLink>
+
+                <button
+                  onClick={logout}
+                  className="text-red-500 text-sm"
+                >
+                  Logout
+                </button>
+              </div>
+            ) : (
+              <NavLink
+                to="/login"
+                className="ml-3 flex items-center gap-2 px-4 py-2 rounded-full hover:bg-slate-100"
+              >
+                <HiOutlineLogin />
+                Login
+              </NavLink>
+            )}
           </div>
 
+          {/* 📱 Mobile Menu Button */}
           <button
-            type="button"
-            aria-label="Open menu"
-            className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-slate-200 bg-white text-slate-700 shadow-sm transition hover:bg-slate-100 lg:hidden"
             onClick={() => setSidebarOpen(true)}
+            className="lg:hidden"
           >
-            <FiMenu className="h-6 w-6" />
+            <FiMenu size={24} />
           </button>
         </div>
       </header>
 
-      <div
-        className={`fixed inset-0 z-40 transition duration-300 lg:hidden ${sidebarOpen ? "pointer-events-auto" : "pointer-events-none"}`}
-        aria-hidden={!sidebarOpen}
-      >
+      {/* 📱 MOBILE SIDEBAR */}
+      <div className={`${sidebarOpen ? "block" : "hidden"} lg:hidden`}>
         <div
-          className={`absolute inset-0 bg-slate-900/40 transition-opacity ${sidebarOpen ? "opacity-100" : "opacity-0"}`}
+          className="fixed inset-0 bg-black/40"
           onClick={() => setSidebarOpen(false)}
         />
-        <aside
-          className={`fixed left-0 top-0 bottom-0 z-50 flex w-72 flex-col gap-6 overflow-y-auto bg-white px-6 py-8 shadow-2xl transition-transform duration-300 ${
-            sidebarOpen ? "translate-x-0" : "-translate-x-full"
-          }`}
-        >
-          <div className="flex items-center justify-between">
-            <div>
-              <p className="text-lg font-semibold text-slate-900">Menu</p>
-              <p className="mt-1 text-sm text-slate-500">Browse the site</p>
-            </div>
-            <button
-              type="button"
-              onClick={() => setSidebarOpen(false)}
-              className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-slate-200 text-slate-700 transition hover:bg-slate-100"
-            >
-              <FiX className="h-5 w-5" />
-            </button>
-          </div>
-          <div className="flex flex-col gap-2">
+
+        <div className="fixed left-0 top-0 w-72 h-full bg-white p-6 shadow-lg">
+
+          <button onClick={() => setSidebarOpen(false)}>
+            <FiX size={24} />
+          </button>
+
+          {/* Menu */}
+          <div className="mt-6 flex flex-col gap-3">
             {menuItems.map((item) => (
               <NavLink
                 key={item.name}
                 to={item.to}
                 onClick={() => setSidebarOpen(false)}
-                className={({ isActive }) =>
-                  `flex items-center gap-3 rounded-2xl px-4 py-3 text-sm font-medium transition ${
-                    isActive
-                      ? "bg-red-50 text-red-600"
-                      : "text-slate-700 hover:bg-slate-100 hover:text-slate-900"
-                  }`
-                }
+                className="flex items-center gap-2 p-3 rounded-lg hover:bg-slate-100"
               >
-                <span className="relative">
-                  {item.icon}
-
-                  {item.name === "Cart" && totalItems > 0 && (
-                    <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs px-1.5 rounded-full">
-                      {totalItems}
-                    </span>
-                  )}
-                </span>
-                <span>{item.name}</span>
+                {item.icon}
+                {item.name}
               </NavLink>
             ))}
           </div>
-        </aside>
+
+          {/* 👤 Mobile User */}
+          <div className="mt-6 border-t pt-4">
+            {user ? (
+              <>
+                <div className="flex items-center gap-2">
+                  {user.image ? (
+                    <img
+                      src={user.image}
+                      className="h-8 w-8 rounded-full"
+                    />
+                  ) : (
+                    <div className="h-8 w-8 flex items-center justify-center bg-red-500 text-white rounded-full">
+                      {user.name.charAt(0).toUpperCase()}
+                    </div>
+                  )}
+                  <span>{user.name}</span>
+                </div>
+
+                <button
+                  onClick={logout}
+                  className="text-red-500 mt-2"
+                >
+                  Logout
+                </button>
+              </>
+            ) : (
+              <NavLink to="/login">Login</NavLink>
+            )}
+          </div>
+        </div>
       </div>
     </>
   );
